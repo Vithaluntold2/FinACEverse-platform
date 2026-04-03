@@ -3,6 +3,10 @@ import { useAuth } from "./hooks/use-auth";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Modules from "./pages/Modules";
+import HealthMonitor from "./pages/HealthMonitor";
+import Users from "./pages/Users";
+import Security from "./pages/Security";
+import Settings from "./pages/Settings";
 import Sidebar from "./components/Sidebar";
 
 export default function App() {
@@ -31,6 +35,10 @@ export default function App() {
         <Switch>
           <Route path="/" component={Dashboard} />
           <Route path="/modules" component={Modules} />
+          <Route path="/health" component={HealthMonitor} />
+          <Route path="/users" component={Users} />
+          <Route path="/security" component={Security} />
+          <Route path="/settings" component={Settings} />
           <Route>
             <div className="flex h-full items-center justify-center">
               <p className="text-[hsl(var(--muted-foreground))]">Page not found</p>

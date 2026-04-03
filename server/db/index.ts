@@ -4,13 +4,14 @@ import * as schema from "./schema.js";
 
 const { Pool } = pg;
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL environment variable is required");
-}
+const hasDB = !!process.env.DATABASE_URL;
 
-export const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  max: 10,
-});
+export const pool = hasDB
+  ? new Pool({ connectionString: process.env.DATABASE_URL, max: 10 })
+  : (null as unknown as pg.Pool);
 
-export const db = drizzle(pool, { schema });
+export const db = hasDB
+  ? drizzle(pool, { schema })
+  : (null as any);
+
+export { hasDB };
