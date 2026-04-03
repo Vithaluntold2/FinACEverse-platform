@@ -18,12 +18,12 @@ interface SidebarProps {
 }
 
 const NAV_ITEMS = [
-  { path: "/", label: "Dashboard", icon: LayoutDashboard },
-  { path: "/modules", label: "Modules", icon: Boxes },
-  { path: "/health", label: "Health Monitor", icon: Activity },
-  { path: "/users", label: "Users", icon: Users },
-  { path: "/security", label: "Security", icon: Shield },
-  { path: "/settings", label: "Settings", icon: Settings },
+  { path: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { path: "/admin/modules", label: "Modules", icon: Boxes },
+  { path: "/admin/health", label: "Health Monitor", icon: Activity },
+  { path: "/admin/users", label: "Users", icon: Users },
+  { path: "/admin/security", label: "Security", icon: Shield },
+  { path: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
 export default function Sidebar({ currentPath, user }: SidebarProps) {

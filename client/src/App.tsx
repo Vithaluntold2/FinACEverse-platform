@@ -1,5 +1,6 @@
-import { Route, Switch, useLocation } from "wouter";
+import { Route, Switch, useLocation, Redirect } from "wouter";
 import { useAuth } from "./hooks/use-auth";
+import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Modules from "./pages/Modules";
@@ -9,7 +10,7 @@ import Security from "./pages/Security";
 import Settings from "./pages/Settings";
 import Sidebar from "./components/Sidebar";
 
-export default function App() {
+function AdminLayout() {
   const { user, isLoading, isAuthenticated } = useAuth();
   const [location] = useLocation();
 
@@ -33,19 +34,30 @@ export default function App() {
       <Sidebar currentPath={location} user={user!} />
       <main className="flex-1 overflow-y-auto p-6">
         <Switch>
-          <Route path="/" component={Dashboard} />
-          <Route path="/modules" component={Modules} />
-          <Route path="/health" component={HealthMonitor} />
-          <Route path="/users" component={Users} />
-          <Route path="/security" component={Security} />
-          <Route path="/settings" component={Settings} />
+          <Route path="/admin" component={Dashboard} />
+          <Route path="/admin/modules" component={Modules} />
+          <Route path="/admin/health" component={HealthMonitor} />
+          <Route path="/admin/users" component={Users} />
+          <Route path="/admin/security" component={Security} />
+          <Route path="/admin/settings" component={Settings} />
           <Route>
-            <div className="flex h-full items-center justify-center">
-              <p className="text-[hsl(var(--muted-foreground))]">Page not found</p>
-            </div>
+            <Redirect to="/admin" />
           </Route>
         </Switch>
       </main>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Switch>
+      <Route path="/" component={Landing} />
+      <Route path="/admin/:rest*" component={AdminLayout} />
+      <Route path="/admin" component={AdminLayout} />
+      <Route>
+        <Redirect to="/" />
+      </Route>
+    </Switch>
   );
 }
