@@ -5,8 +5,8 @@ export default function LandingNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const links = [
+    { href: "#platform", label: "Platform" },
     { href: "#products", label: "Products" },
-    { href: "#solutions", label: "Solutions" },
     { href: "/admin", label: "Command Center" },
   ];
 
