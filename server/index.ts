@@ -14,6 +14,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = Number(process.env.PORT) || 5000;
 
+// Trust Railway's reverse proxy (required for secure cookies)
+app.set("trust proxy", 1);
+
 // Body parsing
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: false }));
