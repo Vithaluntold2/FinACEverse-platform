@@ -10,7 +10,11 @@ import authRoutes from "./routes/auth.js";
 import moduleRoutes from "./routes/modules.js";
 import healthRoutes from "./routes/health.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Works in both ESM (dev) and CJS (production esbuild bundle)
+const __dirname =
+  typeof import.meta?.url === "string"
+    ? path.dirname(fileURLToPath(import.meta.url))
+    : path.dirname(__filename);
 const app = express();
 const PORT = Number(process.env.PORT) || 5000;
 
@@ -63,19 +67,23 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// Dev: use Vite middleware
-if (process.env.NODE_ENV === "development") {
-  const { createServer } = await import("vite");
-  const vite = await createServer({
-    server: { middlewareMode: true },
-    root: path.resolve(__dirname, "..", "client"),
-    appType: "spa",
+// Dev: use Vite middleware (wrapped in async to avoid top-level await for CJS build)
+async function startServer() {
+  if (process.env.NODE_ENV === "development") {
+    const { createServer } = await import("vite");
+    const vite = await createServer({
+      server: { middlewareMode: true },
+      root: path.resolve(__dirname, "..", "client"),
+      appType: "spa",
+    });
+    app.use(vite.middlewares);
+  }
+
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`✅ FinACEverse Command Center running on port ${PORT}`);
   });
-  app.use(vite.middlewares);
 }
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`✅ FinACEverse Command Center running on port ${PORT}`);
-});
+startServer();
 
 export default app;

@@ -55,6 +55,9 @@
     "zod": "^3.25.76",
     "zod-validation-error": "^3.4.0"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.14",
     "@types/bcryptjs": "^2.4.6",

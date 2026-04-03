@@ -7,7 +7,7 @@ async function build() {
     platform: "node",
     format: "cjs",
     bundle: true,
-    external: ["pg-native", "better-sqlite3"],
+    external: ["pg-native", "better-sqlite3", "fsevents"],
     target: "node20",
     sourcemap: true,
   });
